@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import CalendarContext from "../../context/calendarContext";
 
 const Calendar = () => {
+  const calendarContext = useContext(CalendarContext);
+  const { getCurrentDate, currentMonth, currentYear } = calendarContext;
+
+  useState(() => {
+    getCurrentDate();
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <div className="calendar">
       <p className="title">
-        January 2020{" "}
+        {currentMonth} {currentYear}{" "}
         <span>
           <button>
             <i className="fas fa-pencil-alt"></i>

@@ -3,6 +3,7 @@ import CalendarContext from "./calendarContext";
 import CalendarReducer from "./calendarReducer";
 import {
   GET_CURRENT_DATE,
+  SET_DAYS,
   PREV_MONTH,
   NEXT_MONTH,
   JUMP_TO,
@@ -14,9 +15,11 @@ import {
 
 const CalendarState = props => {
   const initialState = {
-    currentDay: null,
+    currentDayOfWeek: null,
+    currentDayOfMonth: null,
     currentMonth: null,
     currentYear: null,
+    currentDate: {},
     days: [],
     events: [],
     loading: false
@@ -26,7 +29,45 @@ const CalendarState = props => {
 
   // Get current date
   const getCurrentDate = () => {
-    console.log("Get current date");
+    const date = new Date();
+    const currDayOfWeek = date.getDay();
+    const currDayOfMonth = date.getDate();
+    const currMonth = date.getMonth();
+    const currYear = date.getFullYear();
+
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ];
+
+    setDays(currDayOfWeek, currDayOfMonth, currMonth + 1, currYear);
+
+    dispatch({
+      type: GET_CURRENT_DATE,
+      payload: {
+        currDayOfWeek,
+        currDayOfMonth,
+        currMonth: months[currMonth],
+        currYear
+      }
+    });
+  };
+
+  // Set days
+  const setDays = (dw, dm, m, y) => {
+    // console.log(dw, dm, m, y);
+    let emptyDaysTop = 0;
+    let emptyDaysBottom = 0;
   };
 
   // Get previous month
@@ -69,9 +110,11 @@ const CalendarState = props => {
   return (
     <CalendarContext.Provider
       value={{
-        currentDay: state.currentDay,
+        currentDayOfWeek: state.currentDayOfWeek,
+        currentDayOfMonth: state.currentDayOfMonth,
         currentMonth: state.currentMonth,
         currentYear: state.currentYear,
+        currentDate: state.currentDate,
         days: state.days,
         events: state.events,
         loading: state.events,

@@ -1,4 +1,5 @@
 export const GET_CURRENT_DATE = "GET_CURRENT_DATE";
+export const SET_DAYS = "SET_DAYS";
 export const PREV_MONTH = "PREV_MONTH";
 export const NEXT_MONTH = "NEXT_MONTH";
 export const JUMP_TO = "JUMP_TO";
