@@ -1,8 +1,14 @@
 import React from "react";
+import CalendarState from "./context/CalendarState";
+
 import "./css/App.css";
 
 function App() {
-  return <div className="App">Hello</div>;
+  return (
+    <CalendarState>
+      <div className="App">Hello</div>
+    </CalendarState>
+  );
 }
 
 export default App;
