@@ -8,7 +8,8 @@ import {
   JUMP_TO,
   ADD_EVENT,
   EDIT_EVENT,
-  DELETE_EVENT
+  DELETE_EVENT,
+  SET_LOADING
 } from "./types";
 
 const CalendarState = props => {
@@ -16,6 +17,7 @@ const CalendarState = props => {
     currentDay: null,
     currentMonth: null,
     currentYear: null,
+    days: [],
     events: [],
     loading: false
   };
@@ -57,12 +59,20 @@ const CalendarState = props => {
     console.log("Delete event");
   };
 
+  // Set Loading
+  const setLoading = () => {
+    dispatch({
+      type: SET_LOADING
+    });
+  };
+
   return (
     <CalendarContext.Provider
       value={{
         currentDay: state.currentDay,
         currentMonth: state.currentMonth,
         currentYear: state.currentYear,
+        days: state.days,
         events: state.events,
         loading: state.events,
         getCurrentDate,
@@ -71,7 +81,8 @@ const CalendarState = props => {
         jumpTo,
         addEvent,
         editEvent,
-        deleteEvent
+        deleteEvent,
+        setLoading
       }}
     >
       {props.children}

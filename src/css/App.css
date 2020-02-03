@@ -4,6 +4,14 @@
   font-family: "Montserrat Alternates", sans-serif;
 }
 
+body {
+  background-size: cover;
+}
+
+button {
+  cursor: pointer;
+}
+
 button:focus,
 input:focus {
   outline: none;
@@ -12,5 +20,140 @@ input:focus {
 a {
   color: #000;
   text-decoration: none;
+}
+
+.container {
+  padding: 0 5%;
+}
+
+.text-shadow {
+  text-shadow: 2px 2px 4px #000000;
+}
+
+.box-shadow {
+  -webkit-box-shadow: 2px 2px 5px #000;
+          box-shadow: 2px 2px 5px #000;
+}
+
+.navbar {
+  height: 70px;
+  padding: 0 5%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.navbar .logo p,
+.navbar .logo span {
+  font-family: "Merienda", cursive;
+  font-size: 1.8rem;
+  color: #ececec;
+}
+
+.navbar .logo p {
+  color: #755c8a;
+}
+
+.navbar .button-group button {
+  background-color: #755c8a;
+  border: none;
+  font-size: 1.2rem;
+  padding: 0.4rem;
+  color: #ececec;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+
+.navbar .button-group button:hover {
+  background-color: #ececec;
+  color: #755c8a;
+}
+
+.buttons button {
+  background: none;
+  border: none;
+  font-size: 3rem;
+  color: #ececec;
+  position: absolute;
+  top: calc(50% - 1.5rem);
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+
+.buttons button:hover {
+  color: #755c8a;
+}
+
+.buttons .prev-btn {
+  left: 2%;
+}
+
+.buttons .next-btn {
+  right: 2%;
+}
+
+.calendar {
+  margin: 0.5rem 0;
+}
+
+.calendar .title {
+  font-size: 2rem;
+  background-color: #755c8a;
+  padding: 0.5rem;
+  border-bottom: 5px solid #ececec;
+}
+
+.calendar .title button {
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  color: #ececec;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+
+.calendar .title button:hover {
+  color: #000;
+}
+
+.calendar .calendar-table .thead,
+.calendar .calendar-table .tbody {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[7];
+      grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.calendar .calendar-table .thead {
+  font-weight: bold;
+  padding: 1rem 0;
+}
+
+.calendar .calendar-table .tbody .day {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #ececec;
+  height: 100px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-size: 3rem;
+}
+
+.calendar .calendar-table .tbody .current-day {
+  background-color: rgba(117, 92, 138, 0.6);
 }
 /*# sourceMappingURL=App.css.map */
