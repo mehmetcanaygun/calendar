@@ -15,7 +15,6 @@ export default (state, action) => {
     case GET_CURRENT_DATE:
       return {
         ...state,
-        currentDayOfWeek: action.payload.currDayOfWeek,
         currentDayOfMonth: action.payload.currDayOfMonth,
         currentMonth: action.payload.currMonth,
         currentYear: action.payload.currYear
@@ -24,6 +23,18 @@ export default (state, action) => {
       return {
         ...state,
         days: action.payload
+      };
+    case PREV_MONTH:
+      return {
+        ...state,
+        currentMonth: action.payload.month,
+        currentYear: action.payload.year
+      };
+    case NEXT_MONTH:
+      return {
+        ...state,
+        currentMonth: action.payload.month,
+        currentYear: action.payload.year
       };
     default:
       return state;

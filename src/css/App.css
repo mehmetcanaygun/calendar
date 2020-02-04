@@ -12,6 +12,8 @@ button {
   cursor: pointer;
 }
 
+input:focus,
+select:focus,
 button:focus,
 input:focus {
   outline: none;
@@ -68,6 +70,11 @@ a {
   color: #ececec;
   -webkit-transition: 0.3s ease-in-out;
   transition: 0.3s ease-in-out;
+  margin-right: 1rem;
+}
+
+.navbar .button-group button:last-child {
+  margin-right: 0;
 }
 
 .navbar .button-group button:hover {
@@ -75,38 +82,16 @@ a {
   color: #755c8a;
 }
 
-.buttons button {
-  background: none;
-  border: none;
-  font-size: 3rem;
-  color: #ececec;
-  position: absolute;
-  top: calc(50% - 1.5rem);
-  -webkit-transition: 0.3s ease-in-out;
-  transition: 0.3s ease-in-out;
-}
-
-.buttons button:hover {
-  color: #755c8a;
-}
-
-.buttons .prev-btn {
-  left: 2%;
-}
-
-.buttons .next-btn {
-  right: 2%;
-}
-
 .calendar {
   margin: 0.5rem 0;
 }
 
 .calendar .title {
-  font-size: 2rem;
   background-color: #755c8a;
-  padding: 0.5rem;
   border-bottom: 5px solid #ececec;
+  padding: 1rem;
+  font-size: 2rem;
+  position: relative;
 }
 
 .calendar .title button {
@@ -120,6 +105,29 @@ a {
 
 .calendar .title button:hover {
   color: #000;
+}
+
+.calendar .title .buttons button {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #ececec;
+  position: absolute;
+  top: calc(50% - 1rem);
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+
+.calendar .title .buttons button:hover {
+  color: #000;
+}
+
+.calendar .title .buttons .prev-btn {
+  right: 4rem;
+}
+
+.calendar .title .buttons .next-btn {
+  right: 1rem;
 }
 
 .calendar .calendar-table .thead,
@@ -152,13 +160,14 @@ a {
       -ms-flex-pack: center;
           justify-content: center;
   font-size: 3rem;
+  position: relative;
 }
 
 .calendar .calendar-table .tbody .day.hidden {
   visibility: hidden;
 }
 
-.calendar .calendar-table .tbody .current-day {
+.calendar .calendar-table .tbody .day.current-day {
   background-color: rgba(117, 92, 138, 0.6);
 }
 /*# sourceMappingURL=App.css.map */

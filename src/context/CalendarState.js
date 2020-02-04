@@ -15,11 +15,9 @@ import {
 
 const CalendarState = props => {
   const initialState = {
-    currentDayOfWeek: null,
     currentDayOfMonth: null,
     currentMonth: null,
     currentYear: null,
-    currentDate: {},
     days: [],
     events: [],
     loading: false
@@ -28,13 +26,10 @@ const CalendarState = props => {
   const [state, dispatch] = useReducer(CalendarReducer, initialState);
 
   // Get current date
-  const getCurrentDate = () => {
-    // Today's date
-    const date = new Date();
-    const currDayOfWeek = date.getDay();
-    const currDayOfMonth = date.getDate();
-    const currMonth = date.getMonth();
-    const currYear = date.getFullYear();
+  const getCurrentDate = (year, month, date) => {
+    const currDayOfMonth = date;
+    const currMonth = month;
+    const currYear = year;
 
     const months = [
       "January",
@@ -52,16 +47,15 @@ const CalendarState = props => {
     ];
 
     // Find the starting day of the month
-    let startingDay = ((currDayOfWeek - (currDayOfMonth - 1)) % 7) + 7;
+    let startingDay = new Date(currYear, currMonth, 1).getDay();
 
     setDays(startingDay, months[currMonth], currYear);
 
     dispatch({
       type: GET_CURRENT_DATE,
       payload: {
-        currDayOfWeek,
         currDayOfMonth,
-        currMonth: months[currMonth],
+        currMonth,
         currYear
       }
     });
@@ -69,7 +63,7 @@ const CalendarState = props => {
 
   // Set days
   const setDays = (sd, m, y) => {
-    let emptyDaysTop = sd - 1;
+    let emptyDaysTop = sd === 0 ? 6 : sd - 1;
     let emptyDaysBottom = 0;
     let totalDaysOfMonth = 0;
 
@@ -124,12 +118,40 @@ const CalendarState = props => {
 
   // Get previous month
   const prevMonth = () => {
-    console.log("Previous month");
+    if (state.currentMonth === 0) {
+      getCurrentDate(state.currentYear - 1, 11, 1);
+
+      dispatch({
+        type: PREV_MONTH,
+        payload: { month: 11, year: state.currentYear - 1 }
+      });
+    } else {
+      getCurrentDate(state.currentYear, state.currentMonth - 1, 1);
+
+      dispatch({
+        type: PREV_MONTH,
+        payload: { month: state.currentMonth - 1, year: state.currentYear }
+      });
+    }
   };
 
   // Get next month
   const nextMonth = () => {
-    console.log("Next month");
+    if (state.currentMonth === 11) {
+      getCurrentDate(state.currentYear + 1, 0, 1);
+
+      dispatch({
+        type: NEXT_MONTH,
+        payload: { month: 0, year: state.currentYear + 1 }
+      });
+    } else {
+      getCurrentDate(state.currentYear, state.currentMonth + 1, 1);
+
+      dispatch({
+        type: NEXT_MONTH,
+        payload: { month: state.currentMonth + 1, year: state.currentYear }
+      });
+    }
   };
 
   // Jump to date
@@ -162,11 +184,9 @@ const CalendarState = props => {
   return (
     <CalendarContext.Provider
       value={{
-        currentDayOfWeek: state.currentDayOfWeek,
         currentDayOfMonth: state.currentDayOfMonth,
         currentMonth: state.currentMonth,
         currentYear: state.currentYear,
-        currentDate: state.currentDate,
         days: state.days,
         events: state.events,
         loading: state.events,

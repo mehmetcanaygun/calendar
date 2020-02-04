@@ -2,7 +2,6 @@ import React from "react";
 import CalendarState from "./context/CalendarState";
 import Navbar from "./components/layout/Navbar";
 import Calendar from "./components/calendar/Calendar";
-import Buttons from "./components/calendar/Buttons";
 
 import "./css/App.css";
 
@@ -13,7 +12,6 @@ function App() {
         <Navbar />
         <div className="container">
           <Calendar />
-          <Buttons />
         </div>
       </div>
     </CalendarState>
