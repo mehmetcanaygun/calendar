@@ -3,7 +3,7 @@ import {
   SET_DAYS,
   PREV_MONTH,
   NEXT_MONTH,
-  JUMP_TO,
+  SET_CURRENT_EVENTS,
   ADD_EVENT,
   EDIT_EVENT,
   DELETE_EVENT,
@@ -35,6 +35,11 @@ export default (state, action) => {
         ...state,
         currentMonth: action.payload.month,
         currentYear: action.payload.year
+      };
+    case SET_CURRENT_EVENTS:
+      return {
+        ...state,
+        currentEvents: action.payload
       };
     default:
       return state;

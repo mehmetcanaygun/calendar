@@ -6,7 +6,7 @@ import {
   SET_DAYS,
   PREV_MONTH,
   NEXT_MONTH,
-  JUMP_TO,
+  SET_CURRENT_EVENTS,
   ADD_EVENT,
   EDIT_EVENT,
   DELETE_EVENT,
@@ -19,7 +19,51 @@ const CalendarState = props => {
     currentMonth: null,
     currentYear: null,
     days: [],
-    events: [],
+    currentEvents: [],
+    events: [
+      {
+        date: "2020-March-11",
+        type: "birthday",
+        description: "MCA's birthday.",
+        reminder: "1 day ago"
+      },
+      {
+        date: "2020-May-19",
+        type: "anniversary",
+        description: "Gençlik ve Spor Bayramı",
+        reminder: null
+      },
+      {
+        date: "2020-July-10",
+        type: "deadline",
+        description: "İş",
+        reminder: "1 week ago"
+      },
+      {
+        date: "2020-February-12",
+        type: "other",
+        description: "Market alışverişi",
+        reminder: "an hour ago"
+      },
+      {
+        date: "2020-February-12",
+        type: "birthday",
+        description: "X doğum günü",
+        reminder: null
+      },
+      {
+        date: "2020-February-12",
+        type: "anniversary",
+        description: "Y yıldönümü",
+        reminder: null
+      },
+      {
+        date: "2020-February-12",
+        type: "deadline",
+        description: "proje teslim",
+        reminder: null
+      }
+    ],
     loading: false
   };
 
@@ -98,15 +142,30 @@ const CalendarState = props => {
     // Create days array
     let daysArr = [];
     for (let i = 0; i < emptyDaysTop; i++) {
-      let dayObj = { visible: false, dayOfMonth: 0, events: null };
+      let dayObj = {
+        visible: false,
+        dayOfMonth: 0,
+        date: `${y}-${m}-0`,
+        events: null
+      };
       daysArr.push(dayObj);
     }
     for (let i = 1; i <= totalDaysOfMonth; i++) {
-      let dayObj = { visible: true, dayOfMonth: i, events: null };
+      let dayObj = {
+        visible: true,
+        dayOfMonth: i,
+        date: `${y}-${m}-${i}`,
+        events: null
+      };
       daysArr.push(dayObj);
     }
     for (let i = 0; i < emptyDaysBottom; i++) {
-      let dayObj = { visible: false, dayOfMonth: 0, events: null };
+      let dayObj = {
+        visible: false,
+        dayOfMonth: 0,
+        date: `${y}-${m}-0`,
+        events: null
+      };
       daysArr.push(dayObj);
     }
 
@@ -156,7 +215,15 @@ const CalendarState = props => {
 
   // Jump to date
   const jumpTo = (month, year) => {
-    console.log("Jump to " + month + " " + year);
+    getCurrentDate(year, month, 1);
+  };
+
+  // Set current events
+  const setCurrentEvents = currEvents => {
+    dispatch({
+      type: SET_CURRENT_EVENTS,
+      payload: currEvents
+    });
   };
 
   // Add event
@@ -189,11 +256,13 @@ const CalendarState = props => {
         currentYear: state.currentYear,
         days: state.days,
         events: state.events,
+        currentEvents: state.currentEvents,
         loading: state.events,
         getCurrentDate,
         prevMonth,
         nextMonth,
         jumpTo,
+        setCurrentEvents,
         addEvent,
         editEvent,
         deleteEvent,

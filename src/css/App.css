@@ -107,6 +107,19 @@ a {
   color: #000;
 }
 
+.calendar .title .edit-date-btn {
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+
+.calendar .title .edit-date-btn.toggled {
+  color: #7c1d1d;
+  -webkit-transform: rotateZ(180deg);
+          transform: rotateZ(180deg);
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+
 .calendar .title .buttons button {
   background: none;
   border: none;
@@ -128,6 +141,51 @@ a {
 
 .calendar .title .buttons .next-btn {
   right: 1rem;
+}
+
+.calendar .title .dropdown-jump {
+  background-color: #41334d;
+  width: 100%;
+  padding: 1rem 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: absolute;
+  left: 0;
+  top: 76px;
+  z-index: 1;
+  visibility: hidden;
+}
+
+.calendar .title .dropdown-jump select,
+.calendar .title .dropdown-jump input,
+.calendar .title .dropdown-jump button {
+  width: 150px;
+  height: 2rem;
+  font-size: 1.2rem;
+  background-color: #ececec;
+  border: none;
+  text-align: center;
+  margin-right: 0.5rem;
+}
+
+.calendar .title .dropdown-jump button {
+  margin-right: 0;
+  background-color: #000;
+}
+
+.calendar .title .dropdown-jump button:hover {
+  color: #ececec;
+}
+
+.calendar .title .dropdown-jump.toggled {
+  visibility: visible;
 }
 
 .calendar .calendar-table .thead,
@@ -163,11 +221,101 @@ a {
   position: relative;
 }
 
+.calendar .calendar-table .tbody .day div {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin: 0.2rem;
+}
+
+.calendar .calendar-table .tbody .day div span {
+  font-size: 0.8rem;
+  margin-bottom: 0.2rem;
+}
+
+.calendar .calendar-table .tbody .day div span i.birthday {
+  color: #18a5af;
+}
+
+.calendar .calendar-table .tbody .day div span i.anniversary {
+  color: #4dad27;
+}
+
+.calendar .calendar-table .tbody .day div span i.deadline {
+  color: #962828;
+}
+
+.calendar .calendar-table .tbody .day div span i.other {
+  color: #e28d1d;
+}
+
 .calendar .calendar-table .tbody .day.hidden {
   visibility: hidden;
 }
 
 .calendar .calendar-table .tbody .day.current-day {
   background-color: rgba(117, 92, 138, 0.6);
+}
+
+.calendar .day-detail {
+  width: 600px;
+  position: absolute;
+  top: 6rem;
+  left: calc(50% - 300px);
+  padding: 1rem;
+  background-color: #ececec;
+  border-bottom: 8px solid #755c8a;
+  font-size: 2rem;
+  display: none;
+}
+
+.calendar .day-detail .close-btn {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 0.2rem;
+  right: 0.2rem;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: #755c8a;
+}
+
+.calendar .day-detail .close-btn:hover {
+  color: #000;
+  -webkit-transform: rotateZ(360deg);
+          transform: rotateZ(360deg);
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.calendar .day-detail .day-detail__events {
+  margin-bottom: 1rem;
+}
+
+.calendar .day-detail .day-detail__events li {
+  list-style: none;
+  font-size: 1.5rem;
+  padding: 0.5rem;
+}
+
+.calendar .day-detail .day-detail__events li:nth-child(even) {
+  background-color: #c7c7c7;
+}
+
+.calendar .day-detail .day-detail__link {
+  font-size: 1rem;
+  color: #755c8a;
+}
+
+.calendar .day-detail.toggled {
+  display: block;
 }
 /*# sourceMappingURL=App.css.map */
