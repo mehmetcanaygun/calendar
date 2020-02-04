@@ -139,6 +139,7 @@ a {
 
 .calendar .calendar-table .tbody .day {
   background-color: rgba(0, 0, 0, 0.6);
+  border: none;
   color: #ececec;
   height: 100px;
   display: -webkit-box;
@@ -151,6 +152,10 @@ a {
       -ms-flex-pack: center;
           justify-content: center;
   font-size: 3rem;
+}
+
+.calendar .calendar-table .tbody .day.hidden {
+  visibility: hidden;
 }
 
 .calendar .calendar-table .tbody .current-day {

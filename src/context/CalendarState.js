@@ -29,6 +29,7 @@ const CalendarState = props => {
 
   // Get current date
   const getCurrentDate = () => {
+    // Today's date
     const date = new Date();
     const currDayOfWeek = date.getDay();
     const currDayOfMonth = date.getDate();
@@ -50,7 +51,10 @@ const CalendarState = props => {
       "December"
     ];
 
-    setDays(currDayOfWeek, currDayOfMonth, currMonth + 1, currYear);
+    // Find the starting day of the month
+    let startingDay = ((currDayOfWeek - (currDayOfMonth - 1)) % 7) + 7;
+
+    setDays(startingDay, months[currMonth], currYear);
 
     dispatch({
       type: GET_CURRENT_DATE,
@@ -64,10 +68,58 @@ const CalendarState = props => {
   };
 
   // Set days
-  const setDays = (dw, dm, m, y) => {
-    // console.log(dw, dm, m, y);
-    let emptyDaysTop = 0;
+  const setDays = (sd, m, y) => {
+    let emptyDaysTop = sd - 1;
     let emptyDaysBottom = 0;
+    let totalDaysOfMonth = 0;
+
+    if (
+      [
+        "January",
+        "March",
+        "May",
+        "July",
+        "August",
+        "October",
+        "December"
+      ].includes(m)
+    ) {
+      emptyDaysBottom = 7 - ((sd + 30) % 7);
+      totalDaysOfMonth = 31;
+    } else if (["April", "June", "September", "November"].includes(m)) {
+      emptyDaysBottom = 7 - ((sd + 29) % 7);
+      totalDaysOfMonth = 30;
+    } else {
+      if ((y % 4 === 0 && y % 100 !== 0) || y % 400 === 0) {
+        // Leap year
+        emptyDaysBottom = 7 - ((sd + 28) % 7);
+        totalDaysOfMonth = 29;
+      } else {
+        // Not a leap year
+        emptyDaysBottom = 7 - ((sd + 27) % 7);
+        totalDaysOfMonth = 28;
+      }
+    }
+
+    // Create days array
+    let daysArr = [];
+    for (let i = 0; i < emptyDaysTop; i++) {
+      let dayObj = { visible: false, dayOfMonth: 0, events: null };
+      daysArr.push(dayObj);
+    }
+    for (let i = 1; i <= totalDaysOfMonth; i++) {
+      let dayObj = { visible: true, dayOfMonth: i, events: null };
+      daysArr.push(dayObj);
+    }
+    for (let i = 0; i < emptyDaysBottom; i++) {
+      let dayObj = { visible: false, dayOfMonth: 0, events: null };
+      daysArr.push(dayObj);
+    }
+
+    dispatch({
+      type: SET_DAYS,
+      payload: daysArr
+    });
   };
 
   // Get previous month

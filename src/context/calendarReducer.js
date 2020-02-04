@@ -20,6 +20,11 @@ export default (state, action) => {
         currentMonth: action.payload.currMonth,
         currentYear: action.payload.currYear
       };
+    case SET_DAYS:
+      return {
+        ...state,
+        days: action.payload
+      };
     default:
       return state;
   }
