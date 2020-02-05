@@ -6,7 +6,10 @@ import {
   SET_DAYS,
   PREV_MONTH,
   NEXT_MONTH,
-  SET_CURRENT_EVENTS,
+  TOGGLE_DETAIL_SB,
+  TOGGLE_EVENTS_SB,
+  TOGGLE_NEW_EVENT_SB,
+  SET_DAY_DETAIL,
   ADD_EVENT,
   EDIT_EVENT,
   DELETE_EVENT,
@@ -20,44 +23,55 @@ const CalendarState = props => {
     currentYear: null,
     days: [],
     currentEvents: [],
+    dayDetail: { today: null, events: [] },
+    detailSidebarToggled: false,
+    eventsSidebarToggled: false,
+    newEventSidebarToggled: false,
     events: [
       {
+        id: 0,
         date: "2020-March-11",
         type: "birthday",
         description: "MCA's birthday.",
         reminder: "1 day ago"
       },
       {
+        id: 1,
         date: "2020-May-19",
         type: "anniversary",
         description: "Gençlik ve Spor Bayramı",
         reminder: null
       },
       {
+        id: 2,
         date: "2020-July-10",
         type: "deadline",
         description: "İş",
         reminder: "1 week ago"
       },
       {
+        id: 3,
         date: "2020-February-12",
         type: "other",
         description: "Market alışverişi",
         reminder: "an hour ago"
       },
       {
+        id: 4,
         date: "2020-February-12",
         type: "birthday",
         description: "X doğum günü",
         reminder: null
       },
       {
+        id: 5,
         date: "2020-February-12",
         type: "anniversary",
         description: "Y yıldönümü",
         reminder: null
       },
       {
+        id: 6,
         date: "2020-February-12",
         type: "deadline",
         description: "proje teslim",
@@ -218,27 +232,48 @@ const CalendarState = props => {
     getCurrentDate(year, month, 1);
   };
 
-  // Set current events
-  const setCurrentEvents = currEvents => {
+  // Set day detail
+  const setDayDetail = (today, events) => {
     dispatch({
-      type: SET_CURRENT_EVENTS,
-      payload: currEvents
+      type: SET_DAY_DETAIL,
+      payload: { today, events }
     });
   };
 
+  // Toggle Detail Sidebar
+  const toggleDetailSidebar = condition => {
+    dispatch({
+      type: TOGGLE_DETAIL_SB,
+      payload: condition
+    });
+  };
+  // Toggle Events Sidebar
+  const toggleEventsSidebar = condition => {
+    dispatch({
+      type: TOGGLE_EVENTS_SB,
+      payload: condition
+    });
+  };
+  // Toggle New Event Sidebar
+  const toggleNewEventSidebar = condition => {
+    dispatch({
+      type: TOGGLE_NEW_EVENT_SB,
+      payload: condition
+    });
+  };
   // Add event
   const addEvent = () => {
     console.log("Add event");
   };
 
   // Edit event
-  const editEvent = () => {
-    console.log("Edit event");
+  const editEvent = id => {
+    console.log("Edit event " + id);
   };
 
   // Delete event
-  const deleteEvent = () => {
-    console.log("Delete event");
+  const deleteEvent = id => {
+    console.log("Delete event " + id);
   };
 
   // Set Loading
@@ -256,13 +291,19 @@ const CalendarState = props => {
         currentYear: state.currentYear,
         days: state.days,
         events: state.events,
-        currentEvents: state.currentEvents,
+        dayDetail: state.dayDetail,
+        detailSidebarToggled: state.detailSidebarToggled,
+        eventsSidebarToggled: state.eventsSidebarToggled,
+        newEventSidebarToggled: state.newEventSidebarToggled,
         loading: state.events,
         getCurrentDate,
         prevMonth,
         nextMonth,
         jumpTo,
-        setCurrentEvents,
+        toggleDetailSidebar,
+        toggleEventsSidebar,
+        toggleNewEventSidebar,
+        setDayDetail,
         addEvent,
         editEvent,
         deleteEvent,

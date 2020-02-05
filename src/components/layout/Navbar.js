@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import CalendarContext from "../../context/calendarContext";
 
 const Navbar = () => {
+  const calendarContext = useContext(CalendarContext);
+  const { toggleNewEventSidebar, toggleEventsSidebar } = calendarContext;
+
   return (
     <nav className="navbar">
       <div className="logo">
@@ -9,10 +13,20 @@ const Navbar = () => {
         </p>
       </div>
       <div className="button-group">
-        <button className="new-event-btn">
+        <button
+          className="new-event-btn"
+          onClick={() => {
+            toggleEventsSidebar(true);
+          }}
+        >
           <i className="fas fa-star"></i> My Events
         </button>
-        <button className="new-event-btn">
+        <button
+          className="new-event-btn"
+          onClick={() => {
+            toggleNewEventSidebar(true);
+          }}
+        >
           <i className="fas fa-plus"></i> New Event
         </button>
       </div>

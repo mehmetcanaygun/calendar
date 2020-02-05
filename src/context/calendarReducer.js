@@ -3,7 +3,10 @@ import {
   SET_DAYS,
   PREV_MONTH,
   NEXT_MONTH,
-  SET_CURRENT_EVENTS,
+  TOGGLE_DETAIL_SB,
+  TOGGLE_EVENTS_SB,
+  TOGGLE_NEW_EVENT_SB,
+  SET_DAY_DETAIL,
   ADD_EVENT,
   EDIT_EVENT,
   DELETE_EVENT,
@@ -36,10 +39,25 @@ export default (state, action) => {
         currentMonth: action.payload.month,
         currentYear: action.payload.year
       };
-    case SET_CURRENT_EVENTS:
+    case TOGGLE_DETAIL_SB:
       return {
         ...state,
-        currentEvents: action.payload
+        detailSidebarToggled: action.payload
+      };
+    case TOGGLE_EVENTS_SB:
+      return {
+        ...state,
+        eventsSidebarToggled: action.payload
+      };
+    case TOGGLE_NEW_EVENT_SB:
+      return {
+        ...state,
+        newEventSidebarToggled: action.payload
+      };
+    case SET_DAY_DETAIL:
+      return {
+        ...state,
+        dayDetail: action.payload
       };
     default:
       return state;

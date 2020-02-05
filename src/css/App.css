@@ -24,6 +24,10 @@ a {
   text-decoration: none;
 }
 
+li {
+  list-style: none;
+}
+
 .container {
   padding: 0 5%;
 }
@@ -256,6 +260,11 @@ a {
   color: #e28d1d;
 }
 
+.calendar .calendar-table .tbody .day:hover {
+  background-color: rgba(236, 236, 236, 0.6);
+  color: #000;
+}
+
 .calendar .calendar-table .tbody .day.hidden {
   visibility: hidden;
 }
@@ -264,19 +273,7 @@ a {
   background-color: rgba(117, 92, 138, 0.6);
 }
 
-.calendar .day-detail {
-  width: 600px;
-  position: absolute;
-  top: 6rem;
-  left: calc(50% - 300px);
-  padding: 1rem;
-  background-color: #ececec;
-  border-bottom: 8px solid #755c8a;
-  font-size: 2rem;
-  display: none;
-}
-
-.calendar .day-detail .close-btn {
+.calendar .sidebar__close-btn {
   width: 40px;
   height: 40px;
   position: absolute;
@@ -286,9 +283,10 @@ a {
   background: none;
   border: none;
   color: #755c8a;
+  z-index: 1;
 }
 
-.calendar .day-detail .close-btn:hover {
+.calendar .sidebar__close-btn:hover {
   color: #000;
   -webkit-transform: rotateZ(360deg);
           transform: rotateZ(360deg);
@@ -296,26 +294,82 @@ a {
   transition: all 0.3s ease-in-out;
 }
 
-.calendar .day-detail .day-detail__events {
+.calendar .detail-sidebar {
+  position: absolute;
+  left: 0;
+  width: 50%;
+  height: 100vh;
+  background-size: cover;
+  display: none;
+}
+
+.calendar .detail-sidebar .detail-sidebar__date {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 1rem 0 2rem 0;
+  position: relative;
+  color: #ececec;
+}
+
+.calendar .detail-sidebar .detail-sidebar__date::before {
+  content: "";
+  position: absolute;
+  bottom: -16px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: #755c8a;
+}
+
+.calendar .detail-sidebar .detail-sidebar__events {
+  color: #ececec;
+  margin-bottom: 2rem;
+}
+
+.calendar .detail-sidebar .detail-sidebar__events button {
+  background: none;
+  border: none;
+  float: right;
+  font-size: 1.3rem;
+}
+
+.calendar .detail-sidebar .detail-sidebar__events .delete-event-btn {
+  color: #812b2b;
+  margin-left: 1rem;
+}
+
+.calendar .detail-sidebar .detail-sidebar__events .edit-event-btn {
+  color: #495ea3;
+}
+
+.calendar .detail-sidebar .detail-sidebar__events li {
+  padding: 1rem;
+  font-size: 1.3rem;
+}
+
+.calendar .detail-sidebar .detail-sidebar__events li:nth-child(even) {
+  background-color: rgba(117, 92, 138, 0.4);
+}
+
+.calendar .detail-sidebar .detail-sidebar__link {
+  font-size: 1.3rem;
   margin-bottom: 1rem;
 }
 
-.calendar .day-detail .day-detail__events li {
-  list-style: none;
-  font-size: 1.5rem;
-  padding: 0.5rem;
+.calendar .detail-sidebar.toggled {
+  display: block;
 }
 
-.calendar .day-detail .day-detail__events li:nth-child(even) {
-  background-color: #c7c7c7;
+.calendar .new-event-sidebar {
+  position: absolute;
+  left: 0;
+  width: 50%;
+  height: 100vh;
+  background-color: #ececec;
+  display: none;
 }
 
-.calendar .day-detail .day-detail__link {
-  font-size: 1rem;
-  color: #755c8a;
-}
-
-.calendar .day-detail.toggled {
+.calendar .new-event-sidebar.toggled {
   display: block;
 }
 /*# sourceMappingURL=App.css.map */

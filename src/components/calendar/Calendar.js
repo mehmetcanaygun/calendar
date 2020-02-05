@@ -2,12 +2,15 @@ import React, { useEffect, useState, useContext } from "react";
 import CalendarContext from "../../context/calendarContext";
 import Buttons from "./Buttons";
 import Day from "./Day";
+import DayDetail from "./DayDetail";
+import MyEvents from "./MyEvents";
+import NewEvent from "./NewEvent";
 
 const Calendar = () => {
   const [jumpMonth, setJumpMonth] = useState(0);
   const [jumpYear, setJumpYear] = useState(2020);
   const [jumpToggled, setJumpToggled] = useState(false);
-  const [dayToggled, setDayToggled] = useState(false);
+  const body = document.getElementsByTagName("body");
 
   // onChange methods to jump a new date
   const onYearChange = e => {
@@ -16,11 +19,6 @@ const Calendar = () => {
 
   const onMonthChange = e => {
     setJumpMonth(parseInt(e));
-  };
-
-  // Toggle Day Detail Box
-  const toggleDay = c => {
-    setDayToggled(c);
   };
 
   // Months array
@@ -47,7 +45,10 @@ const Calendar = () => {
     currentYear,
     days,
     jumpTo,
-    currentEvents
+    currentEvents,
+    detailSidebarToggled,
+    eventsSidebarToggled,
+    newEventSidebarToggled
   } = calendarContext;
 
   // Get current date when the component mounts
@@ -56,6 +57,12 @@ const Calendar = () => {
     getCurrentDate(date.getFullYear(), date.getMonth(), date.getDate());
     // eslint-disable-next-line
   }, []);
+
+  if (detailSidebarToggled || eventsSidebarToggled || newEventSidebarToggled) {
+    body[0].style.overflowY = "hidden";
+  } else {
+    body[0].style.overflowY = "visible";
+  }
 
   return (
     <div className="calendar">
@@ -125,44 +132,13 @@ const Calendar = () => {
         </div>
         <div className="tbody">
           {days.map((day, index) => (
-            <Day key={index} day={day} toggleDay={toggleDay} />
+            <Day key={index} day={day} />
           ))}
         </div>
       </div>
-
-      {/* Day Detail Box */}
-      <div
-        className={
-          dayToggled ? "day-detail toggled box-shadow" : "day-detail box-shadow"
-        }
-      >
-        <button
-          className="close-btn"
-          onClick={() => {
-            toggleDay(false);
-          }}
-        >
-          <i className="fas fa-times-circle"></i>
-        </button>
-        <div className="day-detail__events">
-          <ul>
-            {currentEvents.length > 0 ? (
-              currentEvents.map((e, index) => (
-                <li key={index}>{e.description}</li>
-              ))
-            ) : (
-              <p>There isn't any event for today.</p>
-            )}
-          </ul>
-        </div>
-        <hr />
-        <a
-          href="https://tr.wikipedia.org/wiki/11_Mart"
-          className="day-detail__link"
-        >
-          On this day in history
-        </a>
-      </div>
+      <DayDetail />
+      <MyEvents />
+      <NewEvent />
     </div>
   );
 };
