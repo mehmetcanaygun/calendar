@@ -1,28 +1,19 @@
 import React, { useEffect, useState, useContext } from "react";
 import CalendarContext from "../../context/calendarContext";
 import Buttons from "./Buttons";
+import DropdownJump from "./DropdownJump";
 import Day from "./Day";
 import DayDetail from "./DayDetail";
 import MyEvents from "./MyEvents";
 import NewEvent from "./NewEvent";
 
 const Calendar = () => {
-  const [jumpMonth, setJumpMonth] = useState(0);
-  const [jumpYear, setJumpYear] = useState(2020);
   const [jumpToggled, setJumpToggled] = useState(false);
   const body = document.getElementsByTagName("body");
 
-  // onChange methods to jump a new date
-  const onYearChange = e => {
-    setJumpYear(parseInt(e));
-  };
-
-  const onMonthChange = e => {
-    setJumpMonth(parseInt(e));
-  };
-
   // Months array
   const months = [
+    "zero",
     "January",
     "February",
     "March",
@@ -44,8 +35,6 @@ const Calendar = () => {
     currentMonth,
     currentYear,
     days,
-    jumpTo,
-    currentEvents,
     detailSidebarToggled,
     eventsSidebarToggled,
     newEventSidebarToggled
@@ -54,7 +43,7 @@ const Calendar = () => {
   // Get current date when the component mounts
   useEffect(() => {
     const date = new Date();
-    getCurrentDate(date.getFullYear(), date.getMonth(), date.getDate());
+    getCurrentDate(date.getFullYear(), date.getMonth() + 1, date.getDate());
     // eslint-disable-next-line
   }, []);
 
@@ -77,48 +66,10 @@ const Calendar = () => {
           <i className="fas fa-pencil-alt"></i>
         </button>
         <Buttons />
-        <div
-          className={jumpToggled ? "dropdown-jump toggled" : "dropdown-jump"}
-        >
-          <select
-            className="dropdown-jump__month"
-            defaultValue={jumpMonth}
-            onChange={e => {
-              onMonthChange(e.target.value);
-            }}
-          >
-            <option value="0">January</option>
-            <option value="1">February</option>
-            <option value="2">March</option>
-            <option value="3">April</option>
-            <option value="4">May</option>
-            <option value="5">June</option>
-            <option value="6">July</option>
-            <option value="7">August</option>
-            <option value="8">September</option>
-            <option value="9">October</option>
-            <option value="10">November</option>
-            <option value="11">December</option>
-          </select>
-          <input
-            type="number"
-            className="dropdown-jump__year"
-            min="0"
-            onChange={e => {
-              onYearChange(e.target.value);
-            }}
-            value={jumpYear}
-          />
-          <button
-            className="dropdown-jump__btn"
-            onClick={() => {
-              jumpTo(jumpMonth, jumpYear);
-              setJumpToggled(false);
-            }}
-          >
-            Go
-          </button>
-        </div>
+        <DropdownJump
+          jumpToggled={jumpToggled}
+          setJumpToggled={setJumpToggled}
+        />
       </div>
       <div className="calendar-table">
         <div className="thead">

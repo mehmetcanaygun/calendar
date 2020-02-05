@@ -4,7 +4,13 @@ import CalendarContext from "../../context/calendarContext";
 const Day = ({ day: { visible, dayOfMonth, date } }) => {
   // Init calendar context
   const calendarContext = useContext(CalendarContext);
-  const { events, setDayDetail, toggleDetailSidebar } = calendarContext;
+  const {
+    events,
+    setDayDetail,
+    toggleDetailSidebar,
+    toggleNewEventSidebar,
+    toggleEventsSidebar
+  } = calendarContext;
 
   let todaysEvents = [];
 
@@ -29,6 +35,8 @@ const Day = ({ day: { visible, dayOfMonth, date } }) => {
       onClick={() => {
         setDayDetail(dayOfMonth, todaysEvents);
         toggleDetailSidebar(true);
+        toggleNewEventSidebar(false);
+        toggleEventsSidebar(false);
       }}
     >
       {dayOfMonth}

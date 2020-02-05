@@ -3,7 +3,11 @@ import CalendarContext from "../../context/calendarContext";
 
 const Navbar = () => {
   const calendarContext = useContext(CalendarContext);
-  const { toggleNewEventSidebar, toggleEventsSidebar } = calendarContext;
+  const {
+    toggleNewEventSidebar,
+    toggleEventsSidebar,
+    toggleDetailSidebar
+  } = calendarContext;
 
   return (
     <nav className="navbar">
@@ -17,6 +21,8 @@ const Navbar = () => {
           className="new-event-btn"
           onClick={() => {
             toggleEventsSidebar(true);
+            toggleDetailSidebar(false);
+            toggleNewEventSidebar(false);
           }}
         >
           <i className="fas fa-star"></i> My Events
@@ -25,6 +31,8 @@ const Navbar = () => {
           className="new-event-btn"
           onClick={() => {
             toggleNewEventSidebar(true);
+            toggleDetailSidebar(false);
+            toggleEventsSidebar(false);
           }}
         >
           <i className="fas fa-plus"></i> New Event

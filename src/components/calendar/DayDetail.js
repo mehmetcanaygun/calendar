@@ -35,8 +35,8 @@ const DayDetail = () => {
           : "detail-sidebar"
       }
       style={{
-        top: window.scrollY,
-        background: "url(./detail-bg.jpg) no-repeat center center fixed"
+        top: window.scrollY
+        // background: "url(./detail-bg.jpg) no-repeat center center fixed"
       }}
     >
       <button
@@ -47,7 +47,9 @@ const DayDetail = () => {
       >
         <i className="fas fa-times-circle"></i>
       </button>
-      <p className="detail-sidebar__date text-shadow">{`${months[currentMonth]} ${dayDetail.today}, ${currentYear}`}</p>
+      <p className="detail-sidebar__date text-shadow">{`${
+        months[currentMonth - 1]
+      } ${dayDetail.today}, ${currentYear}`}</p>
       <ul className="detail-sidebar__events">
         {dayDetail.events.map(event => (
           <li className="text-shadow" key={event.id}>
@@ -72,7 +74,9 @@ const DayDetail = () => {
         ))}
       </ul>
       <a
-        href={`https://en.wikipedia.org/wiki/${months[currentMonth]}_${dayDetail.today}`}
+        href={`https://en.wikipedia.org/wiki/${months[currentMonth + 1]}_${
+          dayDetail.today
+        }`}
         target="_blank"
         className="detail-sidebar__link"
       >

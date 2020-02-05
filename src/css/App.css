@@ -277,8 +277,8 @@ li {
   width: 40px;
   height: 40px;
   position: absolute;
-  top: 0.2rem;
-  right: 0.2rem;
+  top: 0.5rem;
+  right: 0.5rem;
   font-size: 2rem;
   background: none;
   border: none;
@@ -296,11 +296,14 @@ li {
 
 .calendar .detail-sidebar {
   position: absolute;
-  left: 0;
+  left: -100%;
   width: 50%;
   height: 100vh;
   background-size: cover;
-  display: none;
+  overflow-y: scroll;
+  -webkit-transition: 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
+  background-color: #ececec;
 }
 
 .calendar .detail-sidebar .detail-sidebar__date {
@@ -356,20 +359,82 @@ li {
   margin-bottom: 1rem;
 }
 
+.calendar .detail-sidebar .detail-sidebar__link:hover {
+  color: #ececec;
+}
+
 .calendar .detail-sidebar.toggled {
-  display: block;
+  left: 0;
+  -webkit-transition: 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
 }
 
 .calendar .new-event-sidebar {
   position: absolute;
-  left: 0;
+  left: -100%;
   width: 50%;
   height: 100vh;
+  background-size: cover;
+  overflow-y: scroll;
+  -webkit-transition: 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
   background-color: #ececec;
-  display: none;
+}
+
+.calendar .new-event-sidebar .new-event-sidebar__title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 1rem 0 2rem 0;
+  position: relative;
+  color: #ececec;
+}
+
+.calendar .new-event-sidebar .new-event-sidebar__title::before {
+  content: "";
+  position: absolute;
+  bottom: -16px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: #755c8a;
+}
+
+.calendar .new-event-sidebar label {
+  font-weight: bold;
+  margin-left: 1rem;
+}
+
+.calendar .new-event-sidebar .new-event-sidebar__description,
+.calendar .new-event-sidebar .new-event-sidebar__date,
+.calendar .new-event-sidebar .new-event-sidebar__type,
+.calendar .new-event-sidebar .new-event-sidebar__reminder,
+.calendar .new-event-sidebar .new-event-sidebar__add-btn {
+  width: 90%;
+  font-size: 1.3rem;
+  margin: 0.5rem 1rem;
+  padding: 0.5rem 0;
+  background-color: #755c8a;
+  color: #ececec;
+  border: 2px solid #ececec;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-box-shadow: 2px 2px 10px #000;
+          box-shadow: 2px 2px 10px #000;
+}
+
+.calendar .new-event-sidebar .new-event-sidebar__add-btn {
+  background-color: #4dad27;
+}
+
+.calendar .new-event-sidebar .new-event-sidebar__add-btn:hover {
+  background-color: #316f19;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
 }
 
 .calendar .new-event-sidebar.toggled {
-  display: block;
+  left: 0;
+  -webkit-transition: 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
 }
 /*# sourceMappingURL=App.css.map */

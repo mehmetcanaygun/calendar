@@ -1,6 +1,7 @@
 import React, { useReducer } from "react";
 import CalendarContext from "./calendarContext";
 import CalendarReducer from "./calendarReducer";
+import uuid from "uuid";
 import {
   GET_CURRENT_DATE,
   SET_DAYS,
@@ -30,51 +31,58 @@ const CalendarState = props => {
     events: [
       {
         id: 0,
-        date: "2020-March-11",
+        date: "2020-03-11",
         type: "birthday",
         description: "MCA's birthday.",
         reminder: "1 day ago"
       },
       {
         id: 1,
-        date: "2020-May-19",
+        date: "2020-05-19",
         type: "anniversary",
         description: "Gençlik ve Spor Bayramı",
         reminder: null
       },
       {
         id: 2,
-        date: "2020-July-10",
+        date: "2020-07-10",
         type: "deadline",
         description: "İş",
         reminder: "1 week ago"
       },
       {
         id: 3,
-        date: "2020-February-12",
+        date: "2020-02-12",
         type: "other",
         description: "Market alışverişi",
         reminder: "an hour ago"
       },
       {
         id: 4,
-        date: "2020-February-12",
+        date: "2020-02-12",
         type: "birthday",
         description: "X doğum günü",
         reminder: null
       },
       {
         id: 5,
-        date: "2020-February-12",
+        date: "2020-02-12",
         type: "anniversary",
         description: "Y yıldönümü",
         reminder: null
       },
       {
         id: 6,
-        date: "2020-February-12",
+        date: "2020-02-12",
         type: "deadline",
         description: "proje teslim",
+        reminder: null
+      },
+      {
+        id: 7,
+        date: "2020-02-08",
+        type: "birthday",
+        description: "XYZ Birthday",
         reminder: null
       }
     ],
@@ -105,9 +113,8 @@ const CalendarState = props => {
     ];
 
     // Find the starting day of the month
-    let startingDay = new Date(currYear, currMonth, 1).getDay();
-
-    setDays(startingDay, months[currMonth], currYear);
+    let startingDay = new Date(currYear, currMonth - 1, 1).getDay();
+    setDays(startingDay, currMonth, currYear);
 
     dispatch({
       type: GET_CURRENT_DATE,
@@ -125,20 +132,10 @@ const CalendarState = props => {
     let emptyDaysBottom = 0;
     let totalDaysOfMonth = 0;
 
-    if (
-      [
-        "January",
-        "March",
-        "May",
-        "July",
-        "August",
-        "October",
-        "December"
-      ].includes(m)
-    ) {
+    if ([1, 3, 5, 7, 8, 10, 12].includes(m)) {
       emptyDaysBottom = 7 - ((sd + 30) % 7);
       totalDaysOfMonth = 31;
-    } else if (["April", "June", "September", "November"].includes(m)) {
+    } else if ([4, 6, 9, 11].includes(m)) {
       emptyDaysBottom = 7 - ((sd + 29) % 7);
       totalDaysOfMonth = 30;
     } else {
@@ -155,20 +152,34 @@ const CalendarState = props => {
 
     // Create days array
     let daysArr = [];
+    let newM = "";
+    let newI = "";
     for (let i = 0; i < emptyDaysTop; i++) {
       let dayObj = {
         visible: false,
         dayOfMonth: 0,
-        date: `${y}-${m}-0`,
+        date: m < 10 ? `${y}-0${m}-${i}` : `${y}-${m}-${i}`,
         events: null
       };
       daysArr.push(dayObj);
     }
     for (let i = 1; i <= totalDaysOfMonth; i++) {
+      if (m < 10) {
+        newM = `0${m}`;
+      } else {
+        newM = m;
+      }
+
+      if (i < 10) {
+        newI = `0${i}`;
+      } else {
+        newI = i;
+      }
+
       let dayObj = {
         visible: true,
         dayOfMonth: i,
-        date: `${y}-${m}-${i}`,
+        date: `${y}-${newM}-${newI}`,
         events: null
       };
       daysArr.push(dayObj);
@@ -177,7 +188,7 @@ const CalendarState = props => {
       let dayObj = {
         visible: false,
         dayOfMonth: 0,
-        date: `${y}-${m}-0`,
+        date: m < 10 ? `${y}-0${m}-${i}` : `${y}-${m}-${i}`,
         events: null
       };
       daysArr.push(dayObj);
@@ -191,12 +202,12 @@ const CalendarState = props => {
 
   // Get previous month
   const prevMonth = () => {
-    if (state.currentMonth === 0) {
-      getCurrentDate(state.currentYear - 1, 11, 1);
+    if (state.currentMonth === 1) {
+      getCurrentDate(state.currentYear - 1, 12, 1);
 
       dispatch({
         type: PREV_MONTH,
-        payload: { month: 11, year: state.currentYear - 1 }
+        payload: { month: 12, year: state.currentYear - 1 }
       });
     } else {
       getCurrentDate(state.currentYear, state.currentMonth - 1, 1);
@@ -210,12 +221,12 @@ const CalendarState = props => {
 
   // Get next month
   const nextMonth = () => {
-    if (state.currentMonth === 11) {
-      getCurrentDate(state.currentYear + 1, 0, 1);
+    if (state.currentMonth === 12) {
+      getCurrentDate(state.currentYear + 1, 1, 1);
 
       dispatch({
         type: NEXT_MONTH,
-        payload: { month: 0, year: state.currentYear + 1 }
+        payload: { month: 1, year: state.currentYear + 1 }
       });
     } else {
       getCurrentDate(state.currentYear, state.currentMonth + 1, 1);
@@ -247,6 +258,7 @@ const CalendarState = props => {
       payload: condition
     });
   };
+
   // Toggle Events Sidebar
   const toggleEventsSidebar = condition => {
     dispatch({
@@ -254,6 +266,7 @@ const CalendarState = props => {
       payload: condition
     });
   };
+
   // Toggle New Event Sidebar
   const toggleNewEventSidebar = condition => {
     dispatch({
@@ -261,9 +274,23 @@ const CalendarState = props => {
       payload: condition
     });
   };
+
   // Add event
-  const addEvent = () => {
-    console.log("Add event");
+  const addEvent = (desc, date, type, reminder) => {
+    let newEvent = {
+      id: uuid.v4(),
+      date: date,
+      type: type,
+      description: desc,
+      reminder: reminder
+    };
+
+    dispatch({
+      type: ADD_EVENT,
+      payload: newEvent
+    });
+
+    getCurrentDate(state.currentYear, state.currentMonth, 1);
   };
 
   // Edit event

@@ -59,6 +59,11 @@ export default (state, action) => {
         ...state,
         dayDetail: action.payload
       };
+    case ADD_EVENT:
+      return {
+        ...state,
+        events: [...state.events, action.payload]
+      };
     default:
       return state;
   }
