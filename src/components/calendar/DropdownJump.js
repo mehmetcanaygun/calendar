@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import CalendarContext from "../../context/calendarContext";
 
 const DropdownJump = ({ jumpToggled, setJumpToggled }) => {
-  const [jumpMonth, setJumpMonth] = useState(0);
+  const [jumpMonth, setJumpMonth] = useState(1);
   const [jumpYear, setJumpYear] = useState(2020);
 
   const calendarContext = useContext(CalendarContext);

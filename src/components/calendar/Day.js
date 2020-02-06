@@ -15,7 +15,7 @@ const Day = ({ day: { visible, dayOfMonth, date } }) => {
   let todaysEvents = [];
 
   // Loop through all the events and if event's date and today's date match, push them in today's events
-  events.map(event => {
+  events.forEach(event => {
     if (date === event.date) {
       todaysEvents.push(event);
     }

@@ -13,11 +13,18 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="logo">
         <p>
-          My<span>Calendar</span>
+          My<span>Calendar</span>{" "}
+          <a
+            href="https://github.com/mehmetcanaygun"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            by MCA
+          </a>
         </p>
       </div>
       <div className="button-group">
-        <button
+        {/* <button
           className="new-event-btn"
           onClick={() => {
             toggleEventsSidebar(true);
@@ -26,7 +33,7 @@ const Navbar = () => {
           }}
         >
           <i className="fas fa-star"></i> My Events
-        </button>
+        </button> */}
         <button
           className="new-event-btn"
           onClick={() => {

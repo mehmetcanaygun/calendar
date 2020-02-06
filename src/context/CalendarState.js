@@ -11,10 +11,7 @@ import {
   TOGGLE_EVENTS_SB,
   TOGGLE_NEW_EVENT_SB,
   SET_DAY_DETAIL,
-  ADD_EVENT,
-  EDIT_EVENT,
-  DELETE_EVENT,
-  SET_LOADING
+  SET_EVENTS
 } from "./types";
 
 const CalendarState = props => {
@@ -28,65 +25,15 @@ const CalendarState = props => {
     detailSidebarToggled: false,
     eventsSidebarToggled: false,
     newEventSidebarToggled: false,
-    events: [
-      {
-        id: 0,
-        date: "2020-03-11",
-        type: "birthday",
-        description: "MCA's birthday.",
-        reminder: "1 day ago"
-      },
-      {
-        id: 1,
-        date: "2020-05-19",
-        type: "anniversary",
-        description: "Gençlik ve Spor Bayramı",
-        reminder: null
-      },
-      {
-        id: 2,
-        date: "2020-07-10",
-        type: "deadline",
-        description: "İş",
-        reminder: "1 week ago"
-      },
-      {
-        id: 3,
-        date: "2020-02-12",
-        type: "other",
-        description: "Market alışverişi",
-        reminder: "an hour ago"
-      },
-      {
-        id: 4,
-        date: "2020-02-12",
-        type: "birthday",
-        description: "X doğum günü",
-        reminder: null
-      },
-      {
-        id: 5,
-        date: "2020-02-12",
-        type: "anniversary",
-        description: "Y yıldönümü",
-        reminder: null
-      },
-      {
-        id: 6,
-        date: "2020-02-12",
-        type: "deadline",
-        description: "proje teslim",
-        reminder: null
-      },
-      {
-        id: 7,
-        date: "2020-02-08",
-        type: "birthday",
-        description: "XYZ Birthday",
-        reminder: null
-      }
-    ],
-    loading: false
+    editEventSidebarToggled: false,
+    editedEvent: {
+      id: "",
+      description: "",
+      date: "",
+      type: "",
+      reminder: ""
+    },
+    events: []
   };
 
   const [state, dispatch] = useReducer(CalendarReducer, initialState);
@@ -96,21 +43,6 @@ const CalendarState = props => {
     const currDayOfMonth = date;
     const currMonth = month;
     const currYear = year;
-
-    const months = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December"
-    ];
 
     // Find the starting day of the month
     let startingDay = new Date(currYear, currMonth - 1, 1).getDay();
@@ -158,8 +90,7 @@ const CalendarState = props => {
       let dayObj = {
         visible: false,
         dayOfMonth: 0,
-        date: m < 10 ? `${y}-0${m}-${i}` : `${y}-${m}-${i}`,
-        events: null
+        date: m < 10 ? `${y}-0${m}-${i}` : `${y}-${m}-${i}`
       };
       daysArr.push(dayObj);
     }
@@ -179,8 +110,7 @@ const CalendarState = props => {
       let dayObj = {
         visible: true,
         dayOfMonth: i,
-        date: `${y}-${newM}-${newI}`,
-        events: null
+        date: `${y}-${newM}-${newI}`
       };
       daysArr.push(dayObj);
     }
@@ -188,8 +118,7 @@ const CalendarState = props => {
       let dayObj = {
         visible: false,
         dayOfMonth: 0,
-        date: m < 10 ? `${y}-0${m}-${i}` : `${y}-${m}-${i}`,
-        events: null
+        date: m < 10 ? `${y}-0${m}-${i}` : `${y}-${m}-${i}`
       };
       daysArr.push(dayObj);
     }
@@ -285,28 +214,46 @@ const CalendarState = props => {
       reminder: reminder
     };
 
-    dispatch({
-      type: ADD_EVENT,
-      payload: newEvent
-    });
+    let events = [...state.events, newEvent];
+
+    addEventsToLS(events);
+    getEventsFromLS();
 
     getCurrentDate(state.currentYear, state.currentMonth, 1);
   };
 
-  // Edit event
-  const editEvent = id => {
-    console.log("Edit event " + id);
-  };
-
   // Delete event
   const deleteEvent = id => {
-    console.log("Delete event " + id);
+    let events = state.events.filter(e => e.id !== id);
+    addEventsToLS(events);
+    getEventsFromLS();
+
+    // dispatch({
+    //   type: DELETE_EVENT,
+    //   payload: id
+    // });
   };
 
-  // Set Loading
-  const setLoading = () => {
+  // Get events from localstorage
+  const getEventsFromLS = () => {
+    const events = localStorage.getItem("events");
+    if (events === null) {
+      setEvents([]);
+    } else {
+      setEvents(JSON.parse(events));
+    }
+  };
+
+  // Add event to localstorage
+  const addEventsToLS = events => {
+    localStorage.setItem("events", JSON.stringify(events));
+  };
+
+  // Set events
+  const setEvents = events => {
     dispatch({
-      type: SET_LOADING
+      type: SET_EVENTS,
+      payload: events
     });
   };
 
@@ -322,7 +269,8 @@ const CalendarState = props => {
         detailSidebarToggled: state.detailSidebarToggled,
         eventsSidebarToggled: state.eventsSidebarToggled,
         newEventSidebarToggled: state.newEventSidebarToggled,
-        loading: state.events,
+        editEventSidebarToggled: state.editEventSidebarToggled,
+        editedEvent: state.editedEvent,
         getCurrentDate,
         prevMonth,
         nextMonth,
@@ -332,9 +280,10 @@ const CalendarState = props => {
         toggleNewEventSidebar,
         setDayDetail,
         addEvent,
-        editEvent,
         deleteEvent,
-        setLoading
+        getEventsFromLS,
+        setEvents,
+        addEventsToLS
       }}
     >
       {props.children}

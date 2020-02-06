@@ -4,7 +4,6 @@ import Buttons from "./Buttons";
 import DropdownJump from "./DropdownJump";
 import Day from "./Day";
 import DayDetail from "./DayDetail";
-import MyEvents from "./MyEvents";
 import NewEvent from "./NewEvent";
 
 const Calendar = () => {
@@ -37,17 +36,25 @@ const Calendar = () => {
     days,
     detailSidebarToggled,
     eventsSidebarToggled,
-    newEventSidebarToggled
+    newEventSidebarToggled,
+    editEventSidebarToggled,
+    getEventsFromLS
   } = calendarContext;
 
   // Get current date when the component mounts
   useEffect(() => {
     const date = new Date();
     getCurrentDate(date.getFullYear(), date.getMonth() + 1, date.getDate());
+    getEventsFromLS();
     // eslint-disable-next-line
   }, []);
 
-  if (detailSidebarToggled || eventsSidebarToggled || newEventSidebarToggled) {
+  if (
+    detailSidebarToggled ||
+    eventsSidebarToggled ||
+    newEventSidebarToggled ||
+    editEventSidebarToggled
+  ) {
     body[0].style.overflowY = "hidden";
   } else {
     body[0].style.overflowY = "visible";
@@ -81,6 +88,15 @@ const Calendar = () => {
           <div>Saturday</div>
           <div>Sunday</div>
         </div>
+        <div className="thead-sm">
+          <div>M</div>
+          <div>T</div>
+          <div>W</div>
+          <div>Th</div>
+          <div>F</div>
+          <div>St</div>
+          <div>S</div>
+        </div>
         <div className="tbody">
           {days.map((day, index) => (
             <Day key={index} day={day} />
@@ -88,7 +104,6 @@ const Calendar = () => {
         </div>
       </div>
       <DayDetail />
-      <MyEvents />
       <NewEvent />
     </div>
   );

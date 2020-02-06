@@ -12,7 +12,14 @@ const NewEvent = () => {
   const [desc, setDesc] = useState("");
   const [date, setDate] = useState("");
   const [type, setType] = useState("other");
-  const [reminder, setReminder] = useState("null");
+  const [reminder, setReminder] = useState("undefined");
+
+  const clearInputs = () => {
+    setDesc("");
+    setDate("");
+    setType("other");
+    setReminder("undefined");
+  };
 
   return (
     <div
@@ -34,11 +41,12 @@ const NewEvent = () => {
       >
         <i className="fas fa-times-circle"></i>
       </button>
-      <p className="new-event-sidebar__title text-shadow">Add a new event</p>
+      <p className="new-event-sidebar__title">Add a new event</p>
       <label htmlFor="new-event-sidebar__description">Description</label>
       <input
         type="text"
         className="new-event-sidebar__description"
+        value={desc}
         maxLength="30"
         onChange={e => {
           setDesc(e.target.value);
@@ -48,6 +56,7 @@ const NewEvent = () => {
       <input
         type="date"
         className="new-event-sidebar__date"
+        value={date}
         onChange={e => {
           setDate(e.target.value);
         }}
@@ -55,7 +64,7 @@ const NewEvent = () => {
       <label htmlFor="new-event-sidebar__type">Event Type</label>
       <select
         className="new-event-sidebar__type"
-        defaultValue="other"
+        value={type}
         onChange={e => {
           setType(e.target.value);
         }}
@@ -66,7 +75,7 @@ const NewEvent = () => {
         <option value="other">Other</option>
       </select>
       <label htmlFor="new-event-sidebar__reminder">Reminder</label>
-      <select
+      {/* <select
         className="new-event-sidebar__reminder"
         defaultValue="null"
         onChange={e => {
@@ -77,8 +86,8 @@ const NewEvent = () => {
         <option value="a hour ago">An hour ago</option>
         <option value="a day ago">A day ago</option>
         <option value="a week ago">A week ago</option>
-        <option value="null">None</option>
-      </select>
+        <option value="undefined">None</option>
+      </select> */}
       <button
         className="new-event-sidebar__add-btn"
         onClick={() => {
@@ -86,6 +95,7 @@ const NewEvent = () => {
             alert("Fill both of description and date fields.");
           } else {
             addEvent(desc, date, type, reminder);
+            clearInputs();
           }
           toggleNewEventSidebar(false);
         }}

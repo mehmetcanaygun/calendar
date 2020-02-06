@@ -8,9 +8,8 @@ import {
   TOGGLE_NEW_EVENT_SB,
   SET_DAY_DETAIL,
   ADD_EVENT,
-  EDIT_EVENT,
   DELETE_EVENT,
-  SET_LOADING
+  SET_EVENTS
 } from "./types";
 
 export default (state, action) => {
@@ -63,6 +62,16 @@ export default (state, action) => {
       return {
         ...state,
         events: [...state.events, action.payload]
+      };
+    case DELETE_EVENT:
+      return {
+        ...state,
+        events: state.events.filter(e => e.id !== action.payload)
+      };
+    case SET_EVENTS:
+      return {
+        ...state,
+        events: action.payload
       };
     default:
       return state;

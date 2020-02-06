@@ -3,6 +3,7 @@ import CalendarContext from "../../context/calendarContext";
 
 const DayDetail = () => {
   const months = [
+    "none",
     "January",
     "February",
     "March",
@@ -23,8 +24,8 @@ const DayDetail = () => {
     dayDetail,
     currentMonth,
     currentYear,
-    editEvent,
-    deleteEvent
+    deleteEvent,
+    setDayDetail
   } = calendarContext;
 
   return (
@@ -47,40 +48,45 @@ const DayDetail = () => {
       >
         <i className="fas fa-times-circle"></i>
       </button>
-      <p className="detail-sidebar__date text-shadow">{`${
-        months[currentMonth - 1]
-      } ${dayDetail.today}, ${currentYear}`}</p>
+      <p className="detail-sidebar__date">{`${months[currentMonth]} ${dayDetail.today}, ${currentYear}`}</p>
       <ul className="detail-sidebar__events">
         {dayDetail.events.map(event => (
-          <li className="text-shadow" key={event.id}>
+          <li key={event.id}>
             {event.description}
             <button
               className="delete-event-btn"
               onClick={() => {
                 deleteEvent(event.id);
+                setDayDetail(
+                  dayDetail.today,
+                  dayDetail.events.filter(e => e.id !== event.id)
+                );
               }}
             >
               <i className="fas fa-trash"></i>
             </button>
-            <button
+            {/* <button
               className="edit-event-btn"
               onClick={() => {
-                editEvent(event.id);
+                setEditedEvent(event);
+                toggleEditEventSidebar(true);
+                toggleDetailSidebar(false);
               }}
             >
               <i className="fas fa-pencil-alt"></i>
-            </button>
+            </button> */}
           </li>
         ))}
       </ul>
       <a
-        href={`https://en.wikipedia.org/wiki/${months[currentMonth + 1]}_${
-          dayDetail.today
-        }`}
+        href={`https://en.wikipedia.org/wiki/${months[currentMonth]}_${dayDetail.today}`}
         target="_blank"
+        rel="noopener noreferrer"
         className="detail-sidebar__link"
       >
-        On this day in history
+        <i className="fas fa-external-link-alt"></i> On{" "}
+        <span>{`${months[currentMonth]} ${dayDetail.today}`}</span> in history
+        (Wikipedia)
       </a>
     </div>
   );
